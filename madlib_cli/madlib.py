@@ -1,34 +1,70 @@
-import re
+# import re
 
 def read_template(read_file):
     with open(read_file) as file:
       return file.read().strip()
  
-def parse_template(str):
-  parts = tuple(re.findall(r"\{(.*?)\}", str))
-  str = re.sub(r"\{(.*?)\}", "{}", str)
-  return (str, parts)
+def parse_template(strip_template):
+    stripped_string = ""
+    stripped_parts = []
+    current_string = ""
+    captured_part = False
+    for char in strip_template:
+      if char == "{":
+        stripped_parts += char
+        captured_part = True
+        current_string = ""
+      elif char == "}":
+        stripped_parts += char
+        captured_part = False
+        stripped_parts.append(current_string)
+      elif captured_part:
+        current_string += char
+      else:
+        stripped_string += char
+    return stripped_string, tuple(stripped_parts)
 
-def merge(story, words):
-  story = f"""It was a {words[0]} and {words[1]} {words[2]}."""
-  return(story.strip("{}"))
+# def parse_template_regex(str):
+#   parts = tuple(re.findall(r"\{(.*?)\}", str))
+#   str = re.sub(r"\{(.*?)\}", "{}", str)
+#   return (str, parts)
 
+def merge(stripped, parts):
+  return stripped.format(*parts)
+
+def user_input(parts):
+    response_list = []
+    for part in parts:
+      response = input(f"Enter a {part} ")
+      response_list.append(response)
+    return response_list
+
+def save(merged, path):
+    with open(path, "w") as file:
+      file.write(merged)
+
+
+def main(path):
+    template = read_template(path)
+    stripped, parts = parse_template(template)
+    response_list = user_input(parts)
+    merged = merge(stripped, response_list)
+    print(merged)
+    output = path.replace(".txt", ".completed.txt")
+    save(merged, output)
 # adjective = input("Enter an Adjective: ")
 # next_adjective = input("Enter another Adjective: ")
 # noun = input("Enter a Noun: ") 
+# selected_words = ()
 
 # madlib_story = open('assets/dark_and_stormy_night_template.txt')
 # print(parse_template(madlib_story))
 
 
 if __name__ == "__main__":
-  # path = 'assets/dark_and_stormy_night_template.txt'
-  welcome = 'assets/welcome.txt'
-  # print(read_template(path))
-  input(read_template(welcome))
+  path = "assets/dark_and_stormy_night_template.txt"
+  # welcome = 'assets/welcome.txt'
+  main(path)
+  # input(read_template(welcome))
 
-# Make Me A Video Game!
-
-# I the {Adjective} and {Adjective} {A First Name} have {Past Tense Verb}{A First Name}'s {Adjective} sister and plan to steal her {Adjective} {Plural Noun}!
-
-# What are a {Large Animal} and backpacking {Small Animal} to do? Before you can help {A Girl's Name}, you'll have to collect the {Adjective} {Plural Noun} and {Adjective} {Plural Noun} that open up the {Number 1-50} worlds connected to A {First Name's} Lair. There are {Number} {Plural Noun} and {Number} {Plural Noun} in the game, along with hundreds of other goodies for you to find.
+# while user_selection != "exit":
