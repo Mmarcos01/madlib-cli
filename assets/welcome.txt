@@ -1,9 +1,12 @@
-Welcome to Python Madlibs. A Mad Lib is an interactive story that uses words of your choice. When prompted, you will be asked to insert a specific type of word. Once you have added all words necessary the story will be created.
+Welcome to Python Madlibs!
+
+A Mad Lib is an interactive story that uses words of your choice. 
+When prompted, you will be asked to insert a specific type of word. 
+Once you have added all words necessary the story will be created.
 
 Instructions: 
 
-When prompted type in your word then press enter to move on to the next word. Once all words have been collected, your story will print.
-
-Type 'exit' to quit the program.
+When prompted type in your word then press enter to move on to the next word. 
+Once all words have been collected, your story will print.
 
 > Press Enter to Begin

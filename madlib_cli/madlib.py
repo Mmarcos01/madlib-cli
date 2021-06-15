@@ -36,7 +36,12 @@ def save(merged, path):
     with open(path, "w") as file:
       file.write(merged)
 
+def welcome():
+  welcome = 'assets/welcome.txt'
+  input(read_template(welcome))
+
 def main(path):
+    welcome()
     template = read_template(path)
     stripped, parts = parse_template(template)
     response_list = user_input(parts)
@@ -47,8 +52,6 @@ def main(path):
 
 if __name__ == "__main__":
   path = "assets/story_template.txt"
-  # welcome = 'assets/welcome.txt'
   main(path)
-  # input(read_template(welcome))
 
 # while user_selection != "exit":
